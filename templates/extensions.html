@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}Gia hạn{% endblock %}{% block content %}
+<div class="heading"><div><div class="eyebrow">EXTENSION REQUESTS</div><h1>Yêu cầu gia hạn</h1><p>Độc giả gửi yêu cầu; thủ thư duyệt hoặc từ chối.</p></div></div>
+{% if me.role=='DocGia' %}<section class="card"><h2>Gửi yêu cầu gia hạn</h2><form method="post"><input type="hidden" name="action" value="request">
+<label>Mã chi tiết khoản mượn</label><input type="number" name="detail_id" required placeholder="Xem mã CT trong tài khoản của tôi">
+<label>Số ngày gia hạn</label><input type="number" name="days" min="1" max="14" value="7" required>
+<label>Lý do</label><textarea name="reason" required></textarea><button class="primary">Gửi yêu cầu</button></form></section>{% endif %}
+<section class="card"><h2>Danh sách yêu cầu</h2><div class="table-wrap"><table><thead><tr><th>Mã YC</th><th>Độc giả</th><th>Sách</th><th>Số ngày</th><th>Lý do</th><th>Trạng thái</th><th>Xử lý</th></tr></thead><tbody>
+{% for r in requests %}<tr><td>#{{ r.MaYeuCau }}</td><td>{{ r.HoTen }}</td><td>{{ r.TenSach }}</td><td>{{ r.SoNgayGiaHan }}</td><td>{{ r.LyDo }}</td><td>{{ r.TrangThai }}</td><td>{% if me.role in ['QuanTri','ThuThu'] and r.TrangThai=='ChoDuyet' %}<form method="post" class="inline"><input type="hidden" name="request_id" value="{{ r.MaYeuCau }}"><button class="primary small" name="action" value="approve">Duyệt</button><button class="danger small" name="action" value="reject">Từ chối</button></form>{% endif %}</td></tr>{% else %}<tr><td colspan="7" class="empty">Chưa có yêu cầu gia hạn.</td></tr>{% endfor %}
+</tbody></table></div></section>{% endblock %}

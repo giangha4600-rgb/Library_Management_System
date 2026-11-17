@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Tài khoản độc giả{% endblock %}{% block content %}
+<div class="heading"><div><div class="eyebrow">MY LIBRARY</div><h1>Sách đang mượn và lịch sử</h1><p>Theo dõi hạn trả, tình trạng và gửi yêu cầu gia hạn.</p></div></div>
+<section class="card"><div class="table-wrap"><table><thead><tr><th>Phiếu</th><th>Mã CT</th><th>Tên sách</th><th>Ngày mượn</th><th>Hạn trả</th><th>Ngày trả</th><th>Trạng thái</th><th>Gia hạn</th></tr></thead><tbody>
+{% for l in loans %}<tr><td>#{{ l.MaPhieuMuon }}</td><td>{{ l.MaCT }}</td><td>{{ l.TenSach }}</td><td>{{ l.NgayMuon }}</td><td>{{ l.NgayHenTra }}</td><td>{{ l.NgayTraThucTe or '—' }}</td><td>{{ l.TrangThai }}{% if l.SoNgayTre %}<small class="red-text">Quá hạn {{ l.SoNgayTre }} ngày</small>{% endif %}</td><td>{% if l.TrangThai=='DangMuon' %}<a class="text-link" href="{{ url_for('extensions') }}">Gửi yêu cầu →</a>{% endif %}</td></tr>{% else %}<tr><td colspan="8" class="empty">Bạn chưa có giao dịch mượn sách.</td></tr>{% endfor %}
+</tbody></table></div></section>{% endblock %}

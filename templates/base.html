@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Library Management{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body>
+<header class="topbar"><a class="brand" href="{{ url_for('home') }}">📚 LIBRARY<span>MANAGEMENT</span></a>
+<nav><a href="{{ url_for('catalog') }}">Tra cứu sách</a>
+{% if me %}<a href="{{ url_for('dashboard') }}">Tổng quan</a>
+{% if me.role in ['QuanTri','ThuThu'] %}
+<a href="{{ url_for('books') }}">Quản lý sách</a><a href="{{ url_for('readers') }}">Độc giả</a>
+<a href="{{ url_for('loans') }}">Mượn – trả</a><a href="{{ url_for('extensions') }}">Gia hạn</a>
+<a href="{{ url_for('reports') }}">Báo cáo</a>{% endif %}
+{% if me.role=='QuanTri' %}<a href="{{ url_for('users') }}">Tài khoản</a>{% endif %}
+{% if me.role=='DocGia' %}<a href="{{ url_for('my_account') }}">Tài khoản của tôi</a><a href="{{ url_for('extensions') }}">Yêu cầu gia hạn</a>{% endif %}
+<a class="logout" href="{{ url_for('logout') }}">Đăng xuất</a>{% else %}<a href="{{ url_for('login') }}">Đăng nhập</a>{% endif %}
+</nav></header>
+<main class="container">
+{% if me %}<div class="welcome">Xin chào, <b>{{ me.name }}</b> · {{ {'QuanTri':'Quản trị viên','ThuThu':'Thủ thư','DocGia':'Độc giả'}[me.role] }}</div>{% endif %}
+{% with messages=get_flashed_messages(with_categories=true) %}{% for category,message in messages %}
+<div class="alert {{ category }}">{{ message }}</div>{% endfor %}{% endwith %}
+{% block content %}{% endblock %}
+</main><footer>Hệ thống quản lý thư viện · Flask + SQL Server</footer>
+</body></html>

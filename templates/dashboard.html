@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}Tổng quan{% endblock %}{% block content %}
+<div class="heading"><div><div class="eyebrow">DASHBOARD</div><h1>Tổng quan thư viện</h1><p>Theo dõi nhanh tình hình hoạt động của thư viện.</p></div></div>
+<div class="stats"><div class="stat"><span>Đầu sách đang quản lý</span><strong>{{ stats.DauSach }}</strong></div>
+<div class="stat"><span>Bản sao có sẵn</span><strong>{{ stats.SachCoSan }}</strong></div>
+<div class="stat"><span>Đang được mượn</span><strong>{{ stats.DangMuon }}</strong></div>
+<div class="stat"><span>Khoản phạt chưa thu</span><strong>{{ stats.KhoanChuaThu }}</strong></div>
+<div class="stat warning"><span>Lượt mượn quá hạn</span><strong>{{ overdue }}</strong></div></div>
+<div class="card"><h2>Thao tác nhanh</h2><div class="quick">
+{% if me.role in ['QuanTri','ThuThu'] %}<a href="{{ url_for('books') }}">＋ Quản lý sách</a><a href="{{ url_for('readers') }}">＋ Hồ sơ độc giả</a><a href="{{ url_for('loans') }}">＋ Lập phiếu mượn</a><a href="{{ url_for('reports') }}">Xem báo cáo →</a>
+{% else %}<a href="{{ url_for('catalog') }}">Tra cứu sách →</a><a href="{{ url_for('my_account') }}">Xem sách đang mượn →</a>{% endif %}
+</div></div>{% endblock %}

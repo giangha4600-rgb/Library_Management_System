@@ -1,0 +1,2 @@
+{% extends "base.html" %}{% block title %}Lỗi hệ thống{% endblock %}{% block content %}
+<section class="card"><h1>Không thể xử lý yêu cầu</h1><p>{{ message }}</p><a class="text-link" href="{{ url_for('home') }}">Quay lại trang chủ →</a></section>{% endblock %}
